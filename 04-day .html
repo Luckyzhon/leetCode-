@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>gs
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*
+     插入排序：遍历数组，找到数据应该插入的位置将其插入即可。
+      插入算法的核心思想是取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序。重复这个过程，直到未排序区间中元素为空，算法结束。
+   */
+    // 插入排序，a 表示数组，n 表示数组大小
+    function insertionSort(a, n) {
+      if (n <= 1) return
+      for (let i = 1; i < n; i++) {//从数组的第二个元素开始，将其视为已排序部分
+        let current = a[i];//将当前元素保存到临时变量current中
+        let j = i - 1;
+        //查询插入的位置
+        for (; j >= 0; j--) {//向左比较直到找到小于或等于current的元素或者到达已排序部分的起始位置
+          if (a[j] > current) { //将大于current的元素向右移动一位
+            a[j + 1] = a[j]; //数据移动
+          } else {
+            break
+          }
+        }
+        a[j + 1] = current; //插入数据
+      }
+      return a;
+    }
+
+    /*
+     冒泡排序： 冒泡排序只会操作相邻的两个数据。每次冒泡操作都会对相邻的两个元素进行比较，看是否满足大小关系要求。如果不满足就让它俩互换。一次冒泡会让至少一个元素移动到它应该在的位置，重复 n 次，就完成了 n 个数据的排序工作。
+    */
+    // 冒泡排序，a 表示数组，n 表示数组大小
+    const bubbleSort = (arr) => {
+      if (arr.length <= 1) return
+      for (let i = 0; i < arr.length; i++) {
+        let hasChange = false
+        for (let j = 0; j < arr.length - i - 1; j++) {
+          if (arr[j] > arr[j + 1]) {
+            const temp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j + 1] = temp
+            hasChange = true
+          }
+        }
+        // 如果false 说明所有元素已经到位
+        if (!hasChange) break
+      }
+      console.log(arr)
+    }
+
+    /*
+      选择排序：
+      选择排序算法的实现思路有点类似插入排序，也分已排序区间和未排序区间。但是选择排序每次会从未排序区间中找到最小的元素，将其放到已排序区间的末尾
+    */
+    // 选择排序
+    const selectionSort = (arr) => {
+      if (arr.length <= 1) return
+      // 需要注意这里的边界, 因为需要在内层进行 i+1后的循环，所以外层需要 数组长度-1
+      for (let i = 0; i < arr.length - 1; i++) {
+        let minIndex = i
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[j] < arr[minIndex]) {
+            minIndex = j // 找到整个数组的最小值
+          }
+        }
+        const temp = arr[i]
+        arr[i] = arr[minIndex]
+        arr[minIndex] = temp
+      }
+      console.log(arr)
+    }
+
+
+    /*
+      归并排序：
+    */
+
+
+
+  </script>
+
+</body>
+
+</html>

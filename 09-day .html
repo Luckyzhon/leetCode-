@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*
+     给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+   */
+    class ListNode {
+      constructor(val, next = null) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+    const removeNthFromEnd = function (head, n) {
+      const dummy = new ListNode(0); // 创建一个虚拟头结点
+      dummy.next = head;
+      let fast = dummy;
+      let slow = dummy;
+      // 将fast指针向后移动n+1步
+      for (let i = 0; i < n + 1; i++) { //n指倒数第n个结点
+        fast = fast.next;
+      }
+      // 同时移动fast和slow指针，直到fast到达链表的末尾
+      while (fast !== null) { //fast==null为指向链表末尾
+        fast = fast.next;
+        slow = slow.next;
+      }
+      // 删除倒数第n个结点
+      slow.next = slow.next.next;
+      return dummy.next;
+    };
+
+    // 示例
+    const node5 = new ListNode(5);
+    const node4 = new ListNode(4, node5);
+    const node3 = new ListNode(3, node4);
+    const node2 = new ListNode(2, node3);
+    const node1 = new ListNode (1, node2);
+
+    const n = 2;
+    const result = removeNthFromEnd(node1, n);
+    // 输出链表：1 -> 2 -> 3 -> 5
+    
+    var removeEnd = function (head, n) {
+      let ret = new ListNode(0, head),
+        slow = fast = ret; // 创建一个虚拟头结点
+      while (n--) fast = fast.next;
+      if (!fast) return ret.next;
+      while (fast.next) {
+        fast = fast.next;
+        slow = slow.next
+      };
+      slow.next = slow.next.next;
+      return ret.next;
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

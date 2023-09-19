@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>gs
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*
+     桶排序： 它将待排序的元素分配到不同的桶中，然后对每个桶中的元素进行排序，最后将所有桶中的元素合并成一个有序的序列。
+
+    1. 确定桶的个数和范围：首先，确定需要多少个桶，一般可以根据待排序元素的数量来决定。然后确定桶的范围，将待排序的元素分配到对应的桶中。
+    2. 将元素分配到桶中：遍历待排序的元素，根据元素的值将其分配到对应的桶中。
+    3. 在每个桶中进行排序：对每个桶中的元素进行排序，可以使用其他排序算法，如插入排序、快速排序或归并排序等。
+    4. 合并桶中的元素：将所有桶中的元素合并成一个有序的序列，即得到最终的排序结果。
+   */
+
+
+
+    /*
+       计数排序： 是一种非比较性质的排序算法，它适用于待排序元素为非负整数，并且元素范围不大的情况。计数排序的基本思想是统计每个元素出现的次数，然后根据统计信息将元素放回原数组中，从而实现排序。
+
+       1.统计元素出现次数：遍历待排序的数组，统计每个元素出现的次数，并将结果存储在一个辅助数组（计数数组）中。
+
+       2.累计次数：对计数数组进行累计求和，得到每个元素在排序后的数组中的位置信息。
+
+       3.将元素放回原数组：遍历原数组，根据计数数组中统计的信息，将元素放回原数组中的正确位置。
+
+       时间复杂度： O(k+n) , k 是数据范围
+    */
+    function mergeSort(arr) {
+      if (arr.length <= 1) {
+        return arr; // 当数组长度为1时，直接返回
+      }
+      const middle = Math.floor(arr.length / 2); // 找到数组的中间位置
+      const left = arr.slice(0, middle); // 将数组分为左右两部分
+      const right = arr.slice(middle);
+      return merge(mergeSort(left), mergeSort(right)); // 递归地对左右两部分进行排序并合并
+    }
+
+    function merge(left, right) {
+      const result = []; // 用于存放合并后的结果数组
+      let i = 0; // 左数组的指针
+      let j = 0; // 右数组的指针
+
+      while (i < left.length && j < right.length) {
+        // 比较左右两部分的元素，将较小的元素放入结果数组中
+        if (left[i] <= right[j]) {
+          result.push(left[i]);
+          i++;
+        } else {
+          result.push(right[j]);
+          j++; 
+        }
+      }
+    }
+    // 将剩余未放入结果数组
+
+    /*
+       基数排序：是一种非比较型的整数排序算法，它根据元素的位数来对待排序数组进行排序。基数排序将待排序的整数按照位数进行拆分，并根据每个位数的值将元素分配到不同的桶中，然后依次对每个位数的桶进行排序，最终完成排序过程。
+
+       基数排序的基本思想如下：
+        1. 确定排序的位数，这通常是根据待排序数组中最大值的位数来确定。
+        2. 从最低位（个位）开始，将待排序数组中的元素按照该位的值分配到10个桶中（0-9），并按照桶的顺序重新组合成一个新的数组。
+        3. 继续对新数组进行下一位（十位）的排序，再次按照十位的值分配到桶中，重组成新的数组。
+        4. 重复上述步骤，直到对最高位（或最高位前一位）排序完成，整个数组就有序了。
+    */
+
+    // 获取数字 num 的某位上的值（从右往左数，个位为第0位）
+        function getDigit(num, digit) {
+          return Math.floor(Math.abs(num) / Math.pow(10, digit)) % 10;
+        }
+
+        // 获取整数数组中的最大值的位数
+        function getMaxDigit(arr) {
+          let max = 0;
+          for (let num of arr) {
+            max = Math.max(max, Math.floor(Math.log10(Math.abs(num))) + 1);
+          }
+          return max;
+        }
+
+        function radixSort(arr) {
+          const maxDigit = getMaxDigit(arr);
+
+          for (let i = 0; i < maxDigit; i++) {
+            const buckets = Array.from({
+              length: 10
+            }, () => []);
+
+            for (let num of arr) {
+              const digit = getDigit(num, i);
+              buckets[digit].push(num);
+            }
+
+            arr = [].concat(...buckets);
+          }
+
+          return arr;
+        }
+
+        // 示例
+        const newarr = [64, 34, 25, 12, 22, 11, 90];
+        const sortedArr = radixSort(newarr);
+        console.log("排序后的数组:", sortedArr); // 输出：[11, 12, 22, 25, 34, 64, 90]
+
+
+    /*
+      堆排序： 是一种基于二叉堆数据结构的排序算法，它利用堆的性质进行排序操作。堆是一种特殊的树状数据结构，分为最大堆和最小堆。在最大堆中，父节点的值大于等于其子节点的值；在最小堆中，父节点的值小于等于其子节点的值。
+
+      堆排序的基本思想如下：
+
+        1. 建立一个最大堆（或最小堆），将待排序数组构建成一个堆。
+
+        2. 将堆顶元素（最大值或最小值，根据排序方式而定）与堆中的最后一个元素交换。
+
+        3. 排除最后一个元素（已排序），再次调整剩余元素组成的堆，使其满足堆的性质。
+
+        4. 重复步骤2和步骤3，直到整个数组有序。
+    */
+
+    // Helper function to heapify a subtree rooted with the index i
+    // n is the size of the heap
+    function heapify(arr, n, i) {
+      let largest = i;
+      let left = 2 * i + 1;
+      let right = 2 * i + 2;
+
+      if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+      }
+
+      if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+      }
+
+      if (largest !== i) {
+        // Swap the elements
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapify(arr, n, largest);
+      }
+    }
+
+    function heapSort(arr) {
+      const n = arr.length;
+
+      // Build max heap (rearrange array)
+      for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        heapify(arr, n, i);
+      }
+
+      // Extract elements from the heap one by one
+      for (let i = n - 1; i > 0; i--) {
+        // Move the current root (max element) to the end
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+
+        // Call max heapify on the reduced heap
+        heapify(arr, i, 0);
+      }
+    }
+
+    // Example usage:
+    const arr = [64, 34, 25, 12, 22, 11, 90];
+    heapSort(arr);
+    console.log("排序后的数组:", arr); // 输出：[11, 12, 22, 25, 34, 64, 90]
+  </script>
+
+</body>
+
+</html>

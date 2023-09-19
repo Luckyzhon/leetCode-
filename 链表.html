@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <script>
+    class Node {
+      constructor(data) {
+        this.data = data; //节点的数据不部分
+        this.next = null; //节点的链接部分（指针部分)
+      }
+    }
+    //定义单向链表
+    class SingleLinked {
+      constructor() {
+        this.size = 0; //单链表的长度，用来记录链表中的节点个数，为一个空链表
+        this.head = new Node('head'); // 是链表的头指针，记录链表的起始位置
+        this.currentNode = ''; //用来记录当前节点
+      }
+      //获取链表的长度
+      getLength() {
+        return this.size
+      }
+
+      //判断链表是否为空
+      isEmpty() {
+        return this.size === 0 //如果this.size 为 0 则说明链表为空，即返回true
+      }
+      //遍历链表：不重复的访问链表中的每一个节点
+      displayList() {
+        var list = '';
+        var currentNode = this.head; //
+        指向链表的头指针
+        while (currentNode) { //若当前节点不为空，则执行循环
+          list += currentNode.data;
+          currentNode = currentNode.next; //让当前指针指向当前节点的下一个节点
+          if (currentNode) { //如果是currentNode 不为空则加上连接符
+            list += '->' //链表节点的连接符
+          }
+        }
+        console.log(list, "---list");
+      }
+      //获取链表的最后一个节点
+      findLast() {
+        var currNode = this.head;
+        while (currNode.next) { //获取当前节点的next域为空，则他是链表的最后一个节点，跳出循环
+          currNode = currNode.next; //若当前节点的next域不为空则让指针指向当前节点的下一个节点
+        }
+        return currNode
+      }
+      //采用尾插法给链表插入元素
+      appendNode(element) {
+        var currNode = this.findLast() //找到链表的最后一个节点
+        var newNode = new Node(element) //创建一个新的节点
+        currNode.next = newNode;
+        newNode.next = null;
+        this.size++; //链表的长度加 1
+      }
+      //删除链表中的一个节点
+      delete(element) {
+        var currentNode = this.head;
+        try {
+          while ((currentNode.next !== null) && (currentNode.next.element != element)) {
+            if (currentNode.next.data === element) {
+              currentNode.next = currentNode.next.next;
+              this.size--;
+            } else {
+              currentNode = currentNode.next;
+            }
+          }
+        } catch (e) { //测试函数，判断函数的运行错误
+          console.log(e, "----捕获错误信息");
+        }
+      }
+
+
+
+    }
+  </script>
+
+</body>
+
+</html>
