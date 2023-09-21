@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <script>
+
+    /*
+      19:给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+    */
+   function removeNode(head, n){
+    let slow = head, fast = head;
+    while(n--) fast = fast.next;
+    if(!fast) return head.next;
+    while(fast.next){
+      slow = slow.next;
+      fast = fast.next;
+    }
+    slow.next = slow.next.next;
+    return head;
+   }
+
+   /*
+    20:给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+
+    有效字符串需满足：
+      1.左括号必须用相同类型的右括号闭合。
+      2.左括号必须以正确的顺序闭合。
+      3.每个右括号都有一个对应的相同类型的左括号
+   */
+
+  //console.log(s.length,s.split(""));
+   function isValid (s){
+    //使用栈的原理，如果是左括号，入栈，如果是右括号，查看当前出栈的字符是否能匹配上右括号
+    let objArr = [] , len = s.length;
+    if(len%2) return false; //判断是单数直接返回，双数才进入判断
+    for(let item of s){
+      if(item==="(" || item==="{" || item==="["){
+        objArr.push(item)
+      }else{
+        if(item===")" && objArr.pop() !== "(") return false;
+        if(item==="}" && objArr.pop() !== "{") return false;
+        if(item==="]" && objArr.pop() !== "[") return false;
+      }
+    }
+    return !objArr.length
+   }
+
+   console.log(isValid("(]"));
+
+   /*
+    21:将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+   */
+
+   function merge(list1, list2){
+    let newList = list1; //克隆其中一个链表，遍历链表向另一条链表插入;
+    
+   }
+
+  </script>
+
+</body>
+</html>
