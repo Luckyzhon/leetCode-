@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+    21:将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+   */
+
+      function merge(list1, list2) {
+        //使用递归法
+        if (list1 === null) return list2;
+        if (list2 === null) return list1;
+        if (list1.val < list2.val) {
+          list1.next = merge(list1.next, list2);
+          return list1;
+        } else {
+          list2.next = merge(list1, list2.next);
+          return list2;
+        }
+      }
+
+      /*
+       22:数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+       eg:  输入：n = 3
+            输出：["((()))","(()())","(())()","()(())","()()()"]
+
+            输入：n = 1
+            输出：["()"]
+      */
+
+      var generateParenthesis = function (n) {
+        const result = [];
+
+        // 递归函数生成括号组合
+        function generate(current, leftCount, rightCount) {
+          // 如果左右括号都用完了，将当前组合添加到结果数组中
+          if (leftCount === n && rightCount === n) {
+            result.push(current);
+            return;
+          }
+
+          // 如果左括号的数量小于 n，可以添加左括号
+          if (leftCount < n) {
+            generate(current + "(", leftCount + 1, rightCount);
+          }
+
+          // 如果右括号的数量小于左括号的数量，可以添加右括号
+          if (rightCount < leftCount) {
+            generate(current + ")", leftCount, rightCount + 1);
+          }
+        }
+        // 调用递归函数开始生成括号组合
+        generate("", 0, 0);
+        return result;
+      };
+      console.log(generateParenthesis(3));
+    </script>
+  </body>
+</html>
