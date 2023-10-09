@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*23:给你一个链表数组，每个链表都已经按升序排列。
+     请你将所有链表合并到一个升序链表中，返回合并后的链表
+    */
+    var mergeKLists = function (lists) {
+      if (lists.length === 0) return [];
+
+    };
+
+    /*24:给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+     */
+    // 1=》递归
+    var swapPairs = function (head) {
+      if (head.length === 0) return [];
+      if (head.length === 1) return head;
+      const singularHead = head.next;
+      head.next = swapPairs(singularHead.next);
+      singularHead.next = head;
+      return singularHead;
+    };
+
+    // 2=》迭代遍历链表，每次交换相邻的两个节点
+    class ListNode {
+      constructor(val) {
+        this.val = val;
+        this.next = null;
+      }
+    }
+
+    function swapPairs2(head) {
+      // 创建一个虚拟头节点，方便处理边界情况
+      const dummy = new ListNode(0);
+      dummy.next = head;
+      let current = dummy;
+
+      // 遍历链表，交换相邻节点
+      while (current.next && current.next.next) {
+        const first = current.next;
+        const second = current.next.next;
+
+        // 交换节点
+        first.next = second.next;
+        second.next = first;
+        current.next = second;
+
+        // 移动当前节点指针到下一组的前一个节点
+        current = first;
+      }
+
+      return dummy.next;
+    }
+  </script>
+
+</body>
+
+</html>
