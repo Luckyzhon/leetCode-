@@ -23,8 +23,8 @@
      */
     // 1=》递归
     var swapPairs = function (head) {
-      if (head.length === 0) return [];
-      if (head.length === 1) return head;
+      if (head === null) return [];
+      if (head.next === null) return head;
       const singularHead = head.next;
       head.next = swapPairs(singularHead.next);
       singularHead.next = head;
