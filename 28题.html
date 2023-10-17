@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+             28: 给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle
+              字符串的第一个匹配项的下标（下标从 0 开始）。如果 needle 不是 haystack 的一部分，则返回  -1 。
+              */
+      //使用indexOf查找
+      var strStr = function (haystack, needle) {
+        return haystack.indexOf(needle);
+      };
+
+      //双层循环
+      var strStr2 = function (haystack, needle) {
+        if (needle === "") return 0;
+        for (var i = 0; i < haystack.length; i++) {
+          if (haystack[i] === needle[0]) {
+            var flag = true;
+            for (var j = 1; j < needle.length; j++) {
+              if (haystack[i + j] != needle[j]) {
+                flag = false;
+                break;
+              }
+            }
+            if (flag) return i;
+          }
+        }
+        return -1;
+      };
+
+      console.log(strStr("leetcode", "leeto"));
+    </script>
+  </body>
+</html>
