@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*29：给你两个整数，被除数 dividend 和除数 divisor。将两数相除，要求 不使用 乘法、除法和取余运算。
+整数除法应该向零截断，也就是截去（truncate）其小数部分。例如，8.345 将被截断为 8 ，-2.7335 将被截断至 -2 。*/
+
+    var divide = function (dividend, divisor) {
+      // 处理特殊情况
+      if (dividend === 0) return 0;
+      if (dividend === -2147483648 && divisor === -1) return 2147483647; // 防止溢出
+      // 确定结果的符号
+      const sign = (dividend > 0) ^ (divisor > 0) ? -1 : 1;
+
+      // 将被除数和除数都转换为正数，以便进行位运算
+      dividend = Math.abs(dividend);
+      divisor = Math.abs(divisor);
+
+      let result = 0;
+      while (dividend >= divisor) {
+        let tempDivisor = divisor;
+        let multiple = 1;
+
+        while (dividend >= (tempDivisor << 1)) {
+          tempDivisor <<= 1;
+          multiple <<= 1;
+        }
+
+        dividend -= tempDivisor;
+        result += multiple;
+      }
+
+      return result * sign;
+    };
+
+    console.log(divide(7, -3));
+
+    /* 30:串联所有单词的子串
+
+    */
+    var findSubstring = function (s, words) {
+
+    };
+
+    /* 31:整数数组的一个 排列  就是将其所有成员以序列或线性顺序排列。
+    */
+    var nextPermutation = function (nums) {
+
+    };
+
+    /* 32: 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+    */
+    var longestValidParentheses = function (s) {
+      const stack = []; // 用于存储括号的索引
+      let maxLen = 0; // 最长有效括号子串的长度
+      let start = -1; // 用于标记有效子串的起始位置
+
+      for (let i = 0; i < s.length; i++) {
+        if (s[i] === '(') {
+          stack.push(i);
+        } else {
+          if (stack.length === 0) {
+            start = i; // 如果栈为空，将当前位置标记为起始位置
+          } else {
+            stack.pop(); // 弹出一个匹配的左括号
+            if (stack.length === 0) {
+              maxLen = Math.max(maxLen, i - start + 1);
+            } else {
+              maxLen = Math.max(maxLen, i - stack[stack.length - 1]);
+            }
+          }
+        }
+      }
+
+      return maxLen;
+    };
+
+    console.log(longestValidParentheses(")()())"));
+
+  </script>
+
+</body>
+
+</html>
