@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    /* 33:整数数组 nums 按升序排列，数组中的值 互不相同 。给你 旋转后 的数组 nums 和一个整数 target ，如果 nums 中存在这个目标值 target ，则返回它的下标，否则返回 -1 。
+    你必须设计一个时间复杂度为 O(log n) 的算法解决此问题。
+    */
+    //二分法
+    var search = function (nums, target) {
+      let left = 0, right = nums[nums.length - 1], mid;
+      while (left <= right) {
+        // >> 1 位运算代替 除2 取整 操作
+        // 为什么不写成 mid = (left+right)/2 ,因为考虑到left+right的溢出边界情况
+        mid = left + ((right - left) >> 1)
+        if (nums[mid] === target) {
+          return mid
+        }
+        if (nums[mid] < target) {
+          left = mid + 1
+        }
+        if (nums[mid] > target) {
+          right = mid - 1
+        }
+      }
+      return -1
+    }
+
+    function search2(nums, target) {
+      let left = 0;
+      let right = nums.length - 1;
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (nums[mid] === target) {
+          return mid; // 找到目标值
+        }
+        // 左半部分是有序的
+        if (nums[left] <= nums[mid]) {
+          if (nums[left] <= target && target < nums[mid]) {
+            right = mid - 1;
+          } else {
+            left = mid + 1;
+          }
+        } else {
+          // 右半部分是有序的
+          if (nums[mid] < target && target <= nums[right]) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+      }
+      return -1; // 未找到目标值
+    }
+
+    /*34:给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。
+   如果数组中不存在目标值 target，返回 [-1, -1]。你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。
+    */
+   //二分查找发，寻找第一个等于target的值，和第一个大于target的值的下标
+    var searchRange = function (nums, target) {
+      const result = [];
+      const n = nums.length;
+      let left = 0;
+      let right = n;
+      while(left <= right){
+        let mid = Math.floor((left + right) / 2);
+        if(nums[mid]===target){//中间值为目标值，往左右两边继续找
+          left = mid;
+          right = mid;
+          while(left-1 >= 0 && nums[left-1]===target){
+            left --;
+          }
+          while(right+1 < n && nums[right+1]===target){
+            right ++;
+          }
+          return [left,right]
+        }else{
+          if(nums[mid] < target){//目标值在右边
+            left = mid+1
+          }else{
+            right = mid-1;
+          }
+        }
+      }
+      return [-1,-1]
+    };
+
+    console.log(searchRange([],0));
+
+  </script>
+
+</body>
+
+</html>
