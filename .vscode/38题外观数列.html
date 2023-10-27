@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /*38:给定一个正整数 n ，输出外观数列的第 n 项。
+    1.     1
+    2.     11
+    3.     21
+    4.     1211
+    5.     111221
+    第一项是数字 1 
+    描述前一项，这个数是 1 即 “ 一 个 1 ”，记作 "11"
+    描述前一项，这个数是 11 即 “ 二 个 1 ” ，记作 "21"
+    描述前一项，这个数是 21 即 “ 一 个 2 + 一 个 1 ” ，记作 "1211"
+    描述前一项，这个数是 1211 即 “ 一 个 1 + 一 个 2 + 二 个 1 ” ，记作 "111221"
+    */
+    var countAndSay = function (n) {
+      let str = "1";
+      for (let i = 2; i <= n; ++i) {
+        const sb = [];
+        let start = 0;
+        let pos = 0;
+
+        while (pos < str.length) {
+          while (pos < str.length && str[pos] === str[start]) {
+            pos++;
+          }
+          sb.push('' + (pos - start) + str[start]);
+          start = pos;
+        }
+        str = sb.join('');
+      }
+      return str;
+    };
+
+    //使用正则，难度大
+    var countAndSay2 = function (n) {
+      let prev = '1'
+      for (let i = 1; i < n; i++) {
+        prev = prev.replace(/(\d)\1*/g, item => `${item.length}${item[0]}`)
+      }
+      return prev
+    };
+
+    /*
+    39:给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。你可以按 任意顺序 返回这些组合。
+    candidates 中的 同一个 数字可以 无限制重复被选取 。如果至少一个数字的被选数量不同，则两种组合是不同的。 
+    */
+
+    var combinationSum = function (candidates, target) {
+      const ans = [];
+      const dfs = (target, combine, idx) => {
+        if (idx === candidates.length) {
+          return;
+        }
+        if (target === 0) {
+          ans.push(combine);
+          return;
+        }
+        // 直接跳过
+        dfs(target, combine, idx + 1);
+        // 选择当前数
+        if (target - candidates[idx] >= 0) {
+          dfs(target - candidates[idx], [...combine, candidates[idx]], idx);
+        }
+      }
+      dfs(target, [], 0);
+      return ans;
+    };
+
+  </script>
+
+</body>
+
+</html>
