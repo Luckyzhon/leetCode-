@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /* 40:给定一个候选人编号的集合 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。candidates 中的每个数字在每个组合中只能使用 一次 。
+    */
+    var combinationSum2 = function (candidates, target) {
+
+    };
+
+    /*41:给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
+    */
+    var firstMissingPositive = function (nums) {
+      const n = nums.length;
+      for (let i = 0; i < n; i++) {
+        while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] !== nums[i]) {
+          // 将元素 nums[i] 放置在正确的位置上
+          [nums[nums[i] - 1], nums[i]] = [nums[i], nums[nums[i] - 1]];
+        }
+      }
+      for (let i = 0; i < n; i++) {
+        if (nums[i] !== i + 1) {
+          return i + 1;
+        }
+      }
+      return n + 1;
+    };
+
+
+  </script>
+
+</body>
+
+</html>
