@@ -14,29 +14,40 @@
     /* 46:全排数组 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案
     */
 
-    var permute = function(nums) {
-    const res = [], path = [];
-    backtracking(nums, nums.length, []);
-    return res;
-    
-    function backtracking(n, k, used) {
-        if(path.length === k) {
-            res.push(Array.from(path));
-            return;
-        }
-        for (let i = 0; i < k; i++ ) {
-            if(used[i]) continue;
-            path.push(n[i]);
-            used[i] = true; // 同支
-            backtracking(n, k, used);
-            path.pop();
-            used[i] = false;
-        }
-    }
-};
+    var permute = function (nums) {
+      const res = [], path = [];
+      backtracking(nums, nums.length, []);
+      return res;
 
-console.log(permute([1,2,3]));
+      function backtracking(n, k, used) {
+        if (path.length === k) {
+          res.push(Array.from(path));
+          return;
+        }
+        for (let i = 0; i < k; i++) {
+          if (used[i]) continue;
+          path.push(n[i]);
+          used[i] = true; // 同支
+          backtracking(n, k, used);
+          path.pop();
+          used[i] = false;
+        }
+      }
+    };
 
+    console.log(permute([1, 2, 3]));
+
+    /* 47:全排列 
+       给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+    */
+
+
+    /* 48:旋转图像， 给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+    你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+    */
+    var permuteUnique = function (nums) {
+      
+    };
 
 
 
