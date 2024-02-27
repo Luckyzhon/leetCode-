@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <script>
+
+    /* 49：给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。字母异位词 是由重新排列源单词的所有字母得到的一个新单词。
+     因为是异位字母，所以可以字符串进行排序，排序之后字母异位词的结果都是一样的
+    */
+    var groupAnagrams = function (strs) {
+      if (strs.length <= 1) return [strs];
+      let result = []
+      for (let i = 0; i < strs.length; i++) {
+        let newArr = [];
+        for (let j = i + 1; j < strs.length; j++) {
+          if (strs[i].length === strs[j].length) {
+            const falg = strs[j]?.split("")?.every((item) => strs[i].indexOf(item));
+            if (falg) {
+              newArr.push(strs[j])
+            }
+          }
+        }
+        //console.log("---newArr结果为：", newArr);
+        result.push(newArr)
+      }
+      // console.log("---result结果为：",result);
+    };
+    groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]);
+    //结果为：[["bat"],["nat","tan"],["ate","eat","tea"]]
+
+    //官方解法
+    var groupAnagrams2 = function (strs) {
+      const map = new Map();
+      for (let str of strs) {
+        let array = Array.from(str);
+        array.sort();
+        let key = array.toString();
+        let list = map.get(key) ? map.get(key) : new Array();
+        list.push(str);
+        map.set(key, list);
+      }
+      return Array.from(map.values());
+    };
+    groupAnagrams2(["eat", "tea", "tan", "ate", "nat", "bat"]);
+
+    /* 50: 计算 Pow(x,n) 即计算x的整数n次幂函数
+     eg：输入x=200000，n=10 输出：102400000
+    */
+    var myPow = function (x, n) {
+
+    };
+    //优雅解法
+    var myPow2 = function (x, n) {
+      if (n == 0 || n == 1) {
+        return n == 0 ? 1 : x
+      } else if (n < 0) {
+        return myPow(1 / x, Math.abs(n)) //Math.abs取绝对值
+      } else {
+        return n % 2 == 0 ? myPow(x * x, n / 2) : myPow(x * x, Math.floor(n / 2)) * x
+      }
+    };
+
+    
+
+
+  </script>
+
+</body>
+
+</html>
