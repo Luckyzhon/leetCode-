@@ -14,7 +14,51 @@
 
     /* 33:整数数组 nums 按升序排列，数组中的值 互不相同 。给你 旋转后 的数组 nums 和一个整数 target ，如果 nums 中存在这个目标值 target ，则返回它的下标，否则返回 -1 。
     你必须设计一个时间复杂度为 O(log n) 的算法解决此问题。
+    方法一：我们定义 target 是在一个在左闭右闭的区间里，也就是[left, right]，由左右两边向中间靠近
+    方法二： 如果说定义 target 是在一个在左闭右开的区间里，也就是[left, right)，设置中间值为右边，
     */
+
+    //方法一：左闭右闭
+    var search = function (nums, target) {
+      // right是数组最后一个数的下标，num[right]在查找范围内，是左闭右闭区间
+      let mid, left = 0, right = nums.length - 1;
+      // 当left=right时，由于nums[right]在查找范围内，所以要包括此情况
+      while (left <= right) {
+        // 位运算 + 防止大数溢出
+        mid = left + ((right - left) >> 1);
+        // 如果中间数大于目标值，要把中间数排除查找范围，所以右边界更新为mid-1；如果右边界更新为mid，那中间数还在下次查找范围内
+        if (nums[mid] > target) {
+          right = mid - 1;  // 去左面闭区间寻找
+        } else if (nums[mid] < target) {
+          left = mid + 1;   // 去右面闭区间寻找
+        } else {
+          return mid;
+        }
+      }
+      return -1;
+    };
+
+    //方法二：左闭右开
+    var search = function (nums, target) {
+      // right是数组最后一个数的下标+1，nums[right]不在查找范围内，是左闭右开区间
+      let mid, left = 0, right = nums.length;
+      // 当left=right时，由于nums[right]不在查找范围，所以不必包括此情况
+      while (left < right) {
+        // 位运算 + 防止大数溢出
+        mid = left + ((right - left) >> 1);
+        // 如果中间值大于目标值，中间值不应在下次查找的范围内，但中间值的前一个值应在；
+        // 由于right本来就不在查找范围内，所以将右边界更新为中间值，如果更新右边界为mid-1则将中间值的前一个值也踢出了下次寻找范围
+        if (nums[mid] > target) {
+          right = mid;  // 去左区间寻找
+        } else if (nums[mid] < target) {
+          left = mid + 1;   // 去右区间寻找
+        } else {
+          return mid;
+        }
+      }
+      return -1;
+    };
+
     //二分法
     var search = function (nums, target) {
       let left = 0, right = nums[nums.length - 1], mid;
@@ -65,36 +109,36 @@
     /*34:给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。
    如果数组中不存在目标值 target，返回 [-1, -1]。你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。
     */
-   //二分查找发，寻找第一个等于target的值，和第一个大于target的值的下标
+    //二分查找发，寻找第一个等于target的值，和第一个大于target的值的下标
     var searchRange = function (nums, target) {
       const result = [];
       const n = nums.length;
       let left = 0;
       let right = n;
-      while(left <= right){
+      while (left <= right) {
         let mid = Math.floor((left + right) / 2);
-        if(nums[mid]===target){//中间值为目标值，往左右两边继续找
+        if (nums[mid] === target) {//中间值为目标值，往左右两边继续找
           left = mid;
           right = mid;
-          while(left-1 >= 0 && nums[left-1]===target){
-            left --;
+          while (left - 1 >= 0 && nums[left - 1] === target) {
+            left--;
           }
-          while(right+1 < n && nums[right+1]===target){
-            right ++;
+          while (right + 1 < n && nums[right + 1] === target) {
+            right++;
           }
-          return [left,right]
-        }else{
-          if(nums[mid] < target){//目标值在右边
-            left = mid+1
-          }else{
-            right = mid-1;
+          return [left, right]
+        } else {
+          if (nums[mid] < target) {//目标值在右边
+            left = mid + 1
+          } else {
+            right = mid - 1;
           }
         }
       }
-      return [-1,-1]
+      return [-1, -1]
     };
 
-    console.log(searchRange([],0));
+    console.log(searchRange([], 0));
 
   </script>
 

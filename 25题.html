@@ -63,7 +63,6 @@
       //双指针法：
       var filterArr = function (nums, val) {
         let i = 0; // 慢指针，用于记录新数组的长度
-
         for (let j = 0; j < nums.length; j++) {
           if (nums[j] !== val) {
             // 如果当前元素不等于 val，将其复制到慢指针位置
@@ -71,7 +70,6 @@
             i++;
           }
         }
-
         return i; // 返回新的数组长度
       };
 
@@ -87,9 +85,25 @@
         return count;
       };
 
+      //暴利解法，双层循环
+      var doubleCounting = function(nums,val){
+        let size = nums.length;
+        for(let i=0;i<size;i++){
+          if(nums[i]===val){//发现需要移除的元素，将数组集体向前移动一位
+            for( let j=i+1; j<size;j++){
+              nums[j-1] = nums[j];
+            }
+            i--;//因为下标i以后的数值都向前移动了一位，所以i也向前移动一位
+            size--; //此时数组的大小 -1 
+          }
+        }
+        return size;
+      }
+
       console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2));
       console.log(filterArr([3, 2, 2, 3], 3));
       console.log(cloneCopy([0, 1, 2, 2, 3, 0, 4, 2], 2));
+      console.log(doubleCounting([0, 1, 2, 2, 3, 0, 4, 2], 2));
     </script>
   </body>
 </html>
