@@ -29,10 +29,10 @@
       }
     };
 
-    /*
+    /* 查找长度最小的子数组：
       给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的 连续 子数组，并返回其长度。如果不存在符合条件的子数组，返回 0
     */
-   //滑动窗口 类似双指针法 ：不断的调节子序列的起始位置和终止位置
+    //滑动窗口 类似双指针法 ：不断的调节子序列的起始位置和终止位置
     var minSubArrayLen = function (target, nums) {
       let start, end
       start = end = 0
@@ -51,11 +51,89 @@
       return ans === Infinity ? 0 : ans
     };
 
+    /* 54:螺旋矩阵：
+     给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+     输入：[[1,2,3],[4,5,6],[7,8,9]];
+     输出：[1,2,3,6,9,8,7,4,5]
+
+     输入：[[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+     输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+    */
+    var spiralOrder = function (matrix) {
+      // 定义矩阵四周的范围，这里是下标的范围
+      let left = 0, right = matrix[0].length - 1,
+        top = 0, bottom = matrix.length - 1;
+      // 存储结果
+      const res = []
+      // 进行遍历
+      while (top < bottom && left < right) {
+        // 第一层迭代，不需要遍历到底
+        for (let i = left; i < right; i++) res.push(matrix[top][i]); // 上层
+        for (let i = top; i < bottom; i++) res.push(matrix[i][right]); // 右层
+        for (let i = right; i > left; i--) res.push(matrix[bottom][i]); // 下层
+        for (let i = bottom; i > top; i--) res.push(matrix[i][left]); // 左层
+        // 向内收缩
+        left++;
+        right--;
+        top++;
+        bottom--;
+      }
+      // 这里不需要while循环，因为只有最后一层
+      // 当只有一列的情况,从上至下进行遍历。注意这里需要遍历到底
+      if (left == right) {
+        for (let i = top; i <= bottom; i++) res.push(matrix[i][left]);
+      }
+      // 只有一行的情况，从左往右进行遍历
+      else if (top == bottom) {
+        for (let i = left; i <= right; i++) res.push(matrix[top][i]);
+      }
+      return res;
+    };
+
+    console.log(spiralOrder([[1,2,3],[4,5,6],[7,8,9]]));
+
     /*
-     螺旋矩阵：
+     59：螺旋矩阵：
      给定一个正整数 n，生成一个包含 1 到 n^2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
      输入: 3 输出: [ [ 1, 2, 3 ], [ 8, 9, 4 ], [ 7, 6, 5 ] ]
     */
+    var spiralOrder = function (matrix) {
+      let startX = startY = 0;   // 起始位置
+      let loop = Math.floor(n / 2);   // 旋转圈数
+      let mid = Math.floor(n / 2);    // 中间位置
+      let offset = 1;    // 控制每一层填充元素个数
+      let count = 1;     // 更新填充数字
+      let res = new Array(n).fill(0).map(() => new Array(n).fill(0));
+      while (loop--) {
+        let row = startX, col = startY;
+        // 上行从左到右（左闭右开）
+        for (; col < n - offset; col++) {
+          res[row][col] = count++;
+        }
+        // 右列从上到下（左闭右开）
+        for (; row < n - offset; row++) {
+          res[row][col] = count++;
+        }
+        // 下行从右到左（左闭右开）
+        for (; col > startY; col--) {
+          res[row][col] = count++;
+        }
+        // 左列做下到上（左闭右开）
+        for (; row > startX; row--) {
+          res[row][col] = count++;
+        }
+        // 更新起始位置
+        startX++;
+        startY++;
+        // 更新offset
+        offset += 1;
+      }
+      // 如果n为奇数的话，需要单独给矩阵最中间的位置赋值
+      if (n % 2 === 1) {
+        res[mid][mid] = count;
+      }
+      return res;
+    };
 
 
   </script>

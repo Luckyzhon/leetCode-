@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=\, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    /*
+    给定一个正整数 n，生成一个包含 1 到 n^2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
+     */
+
+    var generateMatrix = function (n) {
+      let startX = startY = 0;   // 起始位置
+      let loop = Math.floor(n / 2);   // 旋转圈数
+      let mid = Math.floor(n / 2);    // 中间位置
+      let offset = 1;    // 控制每一层填充元素个数
+      let count = 1;     // 更新填充数字
+      let res = new Array(n).fill(0).map(() => new Array(n).fill(0));
+      while (loop--) {
+        let row = startX, col = startY;
+        // 上行从左到右（左闭右开）
+        for (; col < n - offset; col++) {
+          res[row][col] = count++;
+        }
+        // 右列从上到下（左闭右开）
+        for (; row < n - offset; row++) {
+          res[row][col] = count++;
+        }
+        // 下行从右到左（左闭右开）
+        for (; col > startY; col--) {
+          res[row][col] = count++;
+        }
+        // 左列做下到上（左闭右开）
+        for (; row > startX; row--) {
+          res[row][col] = count++;
+        }
+        // 更新起始位置
+        startX++;
+        startY++;
+        // 更新offset
+        offset += 1;
+      }
+      // 如果n为奇数的话，需要单独给矩阵最中间的位置赋值
+      if (n % 2 === 1) {
+        res[mid][mid] = count;
+      }
+      return res;
+    };
+
+    function generateSpiralMatrix(n) {
+      let matrix = []; // 创建空数组来存放结果
+
+      for (let i = 0; i < n; i++) {
+        matrix[i] = new Array(n).fill(null); // 初始化每行为 null
+      }
+
+      let num = 1; // 当前要填入的数字
+      let rowStart = 0; // 起始行索引
+      let colStart = 0; // 起始列索引
+      let rowEnd = n - 1; // 结束行索引
+      let colEnd = n - 1; // 结束列索引
+
+      while (rowStart <= rowEnd && colStart <= colEnd) {
+        // 从左到右填充第一行
+        for (let j = colStart; j <= colEnd; j++) {
+          matrix[rowStart][j] = num++;
+        }
+        rowStart++;
+        // 从上到下填充最后一列
+        if (colStart !== colEnd) {
+          for (let k = rowStart; k <= rowEnd; k++) {
+            matrix[k][colEnd] = num++;
+          }
+          colEnd--;
+        }
+        // 从右到左填充最后一行（除了已经被填充过的）
+        if (rowStart !== rowEnd) {
+          for (let l = colEnd; l >= colStart; l--) {
+            matrix[rowEnd][l] = num++;
+          }
+          rowEnd--;
+        }
+        // 从下到上填充第一列（除了已经被填充过的）
+        if (colStart !== colEnd) {
+          for (let m = rowEnd; m > rowStart; m--) {
+            matrix[m][colStart] = num++;
+          }
+          colStart++;
+        }
+      }
+      return matrix;
+    }
+    // 测试示例
+    console.log(generateSpiralMatrix(3));
+    /*
+    输出结果：
+    [[1, 2, 3], [8, 9, 4], [7, 6, 5]]
+    */
+    console.log(generateMatrix(4));
+
+    /*
+    给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素
+    */
+    var spiralOrder = function (matrix) {
+
+    };
+
+  </script>
+
+</body>
+
+</html>
