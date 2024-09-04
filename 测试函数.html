@@ -27,7 +27,7 @@
       for (let i = 1; i < m; ++i) {
         for (let j = 1; j < n; ++j) {
           dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-          console.log(dp[i][j],"---dp[i][j]");
+          //console.log(dp[i][j],"---dp[i][j]");
           
         }
       }
@@ -35,6 +35,12 @@
     };
 
     console.log(uniquePaths(3,7),"---返回结果");
+    //let arr = Array.from({3}, (_, index) => ({ type: 0, value: '' }))
+    let arr = Array.from({ length: 5 }, (_, index) => ({ type: 0, value: '' }));
+    //console.log(arr,"---arr");
+    let str = Array(5).fill("YYYY");
+    console.log(str,"---str");
+    
     
 
   </script>
