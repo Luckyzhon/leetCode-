@@ -13,8 +13,7 @@
 
     var uniquePaths = function (m, n) {
       const dp = Array(m).fill().map(item => Array(n));
-      console.log(dp,"--dp");
-      
+      //console.log(dp,"--dp");
 
       for (let i = 0; i < m; ++i) {
         dp[i][0] = 1
@@ -28,20 +27,130 @@
         for (let j = 1; j < n; ++j) {
           dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
           //console.log(dp[i][j],"---dp[i][j]");
-          
+
         }
       }
       return dp[m - 1][n - 1]
     };
 
-    console.log(uniquePaths(3,7),"---返回结果");
+    //console.log(uniquePaths(3,7),"---返回结果");
     //let arr = Array.from({3}, (_, index) => ({ type: 0, value: '' }))
     let arr = Array.from({ length: 5 }, (_, index) => ({ type: 0, value: '' }));
     //console.log(arr,"---arr");
     let str = Array(5).fill("YYYY");
-    console.log(str,"---str");
-    
-    
+
+
+    var lengthOfLastWord = function (s) {
+      const str = s.split(' ');
+      const list = str.filter((item) => item);
+      const len = list[list.length - 1].length;
+      return len;
+    };
+
+    //输入 [8,9,9,9] 输出：[9,0,0,0]
+
+    var plusOne = function (digits) {
+      const str = digits[digits.length - 1];
+      const n = digits.length;
+      if (str != 9) {
+        return [...digits.splice(0, digits.length - 1), str + 1]
+      } else {//最后一个值为9，继续判断前一位是不是9，直到不等于的9的情况出现
+        for (let i = n - 2; i >= 0; i--) {
+          if (digits[i] !== 9) {
+            console.log([...digits.splice(0, i), digits[i] + 1, ...new Array(n - i).fill(0)], '返回列表');
+
+            return [...digits.splice(0, i), digits[i] + 1, ...new Array(n - i).fill(0)]
+          } else {
+            console.log([...digits.splice(0, i), 1, ...new Array(n - i).fill(0)], "==");
+
+            return [...digits.splice(0, i), 1, ...new Array(n - i).fill(0)]
+          }
+        }
+      }
+    };
+
+    plusOne([9]);
+
+    /**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+    var plusOne2 = function (digits) {
+      const len = digits.length;
+      for (let i = len - 1; i >= 0; i--) {
+        digits[i]++;
+        digits[i] %= 10;
+        if (digits[i] != 0)
+          return digits;
+      }
+      digits = [...Array(len + 1)].map(_ => 0);;
+      digits[0] = 1;
+      return digits;
+    };
+
+
+    //防抖
+    function debounce(func, delay) {
+      let timer;
+      if (timer) clearTimeout(timer);
+      return function () {
+        let agre = arguments;
+        let current = this
+        timer = setTimeout(() => {
+          func.apply(current, agre)
+        }, delay)
+      }
+    }
+
+    //节流 ，可以使用时间搓或延时器实现
+    function throttle1(func, delay) {
+      let previous = 0;
+      return function () {
+        let currentTime = Date.now();
+        let agre = arguments;
+        let that = this;
+        if (current - previous > delay) {
+          func.apply(thar, agre);
+          previous = currentTime;
+        }
+      }
+    }
+
+    function throttle2(func, delay) {
+      let timer;
+      return function () {
+        let agre = arguments;
+        let current = this
+        if (!timer) {
+          timer = setTimeout(() => {
+            func.apply(current, agre);
+            timer = null
+          }, delay)
+        }
+      }
+    }
+
+    //底层实现
+    function useCallback(callback, deps) {
+      const lastCallback = useRef();
+      const lastDeps = useRef();
+      if (!areDepsEqual(deps, lastDeps.current)) {
+        lastCallback.current = callback;
+        lastDeps.current = deps;
+      }
+      return lastCallback.current;
+    }
+
+    function useMemo(factory, deps) {
+      const lastValue = useRef();
+      const lastDeps = useRef();
+      if (!areDepsEqual(deps, lastDeps.current)) {
+        lastValue.current = factory();
+        lastDeps.current = deps;
+      }
+      return lastValue.current;
+    }
+
 
   </script>
 

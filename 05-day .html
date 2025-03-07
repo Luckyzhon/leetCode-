@@ -56,14 +56,16 @@
         };
         const combinations = [];
         const backtrack = (current, nextDigits) => {
+          //console.log(current,"---current",nextDigits,"---next");
+          
           if (nextDigits.length === 0) {
             combinations.push(current);
             return;
           }
           const currentDigit = nextDigits[0];
           const letters = digitToLetters[currentDigit];
-          for (const letter of letters) {
-            backtrack(current + letter, nextDigits.slice(1));
+          for (const letter of letters) {//for横向遍历
+            backtrack(current + letter, nextDigits.slice(1));//递归纵向遍历
           }
         };
         backtrack('', digits);
@@ -71,7 +73,7 @@
       };
 
       // 示例
-      const digits = '235';
+      const digits = '23';
       const result = letterCombinations(digits);
       console.log(result); // 输出：["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
 
