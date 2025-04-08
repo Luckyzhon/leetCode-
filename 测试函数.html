@@ -55,21 +55,24 @@
       if (str != 9) {
         return [...digits.splice(0, digits.length - 1), str + 1]
       } else {//最后一个值为9，继续判断前一位是不是9，直到不等于的9的情况出现
-        for (let i = n - 2; i >= 0; i--) {
-          if (digits[i] !== 9) {
-            console.log([...digits.splice(0, i), digits[i] + 1, ...new Array(n - i).fill(0)], '返回列表');
-
-            return [...digits.splice(0, i), digits[i] + 1, ...new Array(n - i).fill(0)]
-          } else {
-            console.log([...digits.splice(0, i), 1, ...new Array(n - i).fill(0)], "==");
-
-            return [...digits.splice(0, i), 1, ...new Array(n - i).fill(0)]
+        for (let i = n - 1; i >= 0; i--) {
+          digits[i]++;
+          if (digits[i] % 10 === 0) {
+            digits = [...Array(n + 1)].map(_ => 0);
+            digits[0] = 1;
+            console.log(digits,"----");
+            
+            return digits;
+          }
+          else{
+            console.log(digits,"--digits");
+            return digits
           }
         }
       }
     };
 
-    plusOne([9]);
+    plusOne([8,9,9,9]);
 
     /**
  * @param {number[]} digits
@@ -149,6 +152,47 @@
         lastDeps.current = deps;
       }
       return lastValue.current;
+    }
+
+    //防抖
+    function debfn(fn, delay) {
+      let timer;
+      return function () {
+        let current = this;
+        let arges = arguments;
+        if (timer) clearTimeout(timer)
+        setTimeout(() => {
+          fn.apply(this, arges)
+        }, delay)
+      }
+    }
+
+    //节流
+    function fn1(fn, delay) { //时间搓
+      let parent = 0;
+      return function () {
+        let current = Date.now();
+        let that = this;
+        let arges = arguments;
+        if (current - parent > delay) {
+          fn.apply(that, arguments);
+          parent = current;
+        }
+      }
+    }
+
+    function fn2(fn, delay) { //延时器
+      let timer;
+      return function () {
+        let that = this;
+        let arges = arguments;
+        if (!timer) {
+          timer = setTimeout(() => {
+            fn.apply(that, arguments);
+            timer = null
+          }, delay)
+        }
+      }
     }
 
 

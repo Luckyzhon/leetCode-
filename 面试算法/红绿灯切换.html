@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="light-container">
+    <div class="light red"></div>
+    <div class="light yellow"></div>
+    <div class="light green"></div>
+  </div>
+
+  <style>
+    .light-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .light {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #333;
+    }
+
+    .light.active.red {
+      background-color: red;
+    }
+
+    .light.active.yellow {
+      background-color: yellow;
+    }
+
+    .light.active.green {
+      background-color: green;
+    }
+  </style>
+
+
+
+  <script>
+
+    // 定义灯的状态
+    const RED = 'red';
+    const GREEN = 'green';
+    const YELLOW = 'yellow';
+
+    // 当前灯的状态
+    let currentState = RED;
+
+    // 灯的容器
+    const lightContainer = document.getElementById('light-container');
+
+    // 更新灯的状态
+    function updateLight(state) {
+      // 清除所有灯的亮状态
+      lightContainer.querySelectorAll('.light').forEach(light => {
+        light.classList.remove('active');
+      });
+
+      // 根据状态点亮对应的灯
+      const lightElement = lightContainer.querySelector(`.${state}`);
+      if (lightElement) {
+        lightElement.classList.add('active');
+      }
+    }
+
+    // 创建一个延迟的 Promise
+    function delay(time) {
+      return new Promise(resolve => {
+        setTimeout(resolve, time);
+      });
+    }
+
+    // 切换灯的状态
+    async function switchLight() {
+      while (true) {
+        updateLight(RED);
+        await delay(3000); // 红灯亮 3 秒
+
+        updateLight(GREEN);
+        await delay(2000); // 绿灯亮 2 秒
+
+        updateLight(YELLOW);
+        await delay(1000); // 黄灯亮 1 秒
+      }
+    }
+
+    // 初始化
+    switchLight();
+
+
+
+
+  </script>
+
+</body>
+
+</html>
