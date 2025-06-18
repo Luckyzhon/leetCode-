@@ -54,7 +54,6 @@
       div.onclick = function () {
         const childrenDiv = parentElement.querySelector('.children');
         if (childrenDiv) {
-          childrenDiv.style.display =
             childrenDiv.style.display === 'none' ? 'block' : 'none';
         }
       };
@@ -73,6 +72,9 @@
     // 渲染根节点
     const treeElement = document.getElementById('tree');
     treeData.forEach(node => createTreeNode(node, treeElement));
+
+
+    
   </script>
 </body>
 

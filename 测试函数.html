@@ -60,19 +60,19 @@
           if (digits[i] % 10 === 0) {
             digits = [...Array(n + 1)].map(_ => 0);
             digits[0] = 1;
-            console.log(digits,"----");
-            
+            console.log(digits, "----");
+
             return digits;
           }
-          else{
-            console.log(digits,"--digits");
+          else {
+            console.log(digits, "--digits");
             return digits
           }
         }
       }
     };
 
-    plusOne([8,9,9,9]);
+    plusOne([8, 9, 9, 9]);
 
     /**
  * @param {number[]} digits
@@ -194,6 +194,45 @@
         }
       }
     }
+
+
+    var addBinary = function (a, b) {
+      let ans = "";
+      let ca = 0;
+      for (let i = a.length - 1, j = b.length - 1; i >= 0 || j >= 0; i--, j--) {
+        let sum = ca;
+        sum += i >= 0 ? parseInt(a[i]) : 0;
+        sum += j >= 0 ? parseInt(b[j]) : 0;
+        ans += sum % 2;
+        ca = Math.floor(sum / 2);
+      }
+      ans += ca == 1 ? ca : "";
+      return ans.split('').reverse().join('');
+    };
+
+    //console.log(addBinary(1010, 1011));
+
+    var addBinary22 = function (a, b) {
+      const lena = a.length;
+      const lenb = b.length;
+      const le = Math.max(lena, lenb)
+      let re = [];
+      for (let i = le.length - 1; i >= 0; i--) {
+        re[i] = (lena[i] ?? 0) + lenb[i] ?? 0;
+        console.log(re,"11");
+        
+      }
+      for (let j = 0; j <= re.length - 1; j++) {
+        if (re[j] % 2 === 0) {
+          re[j] === 0;
+          re[j + 1]++;
+        }
+      }
+      return re;
+    };
+
+    console.log(addBinary22(1010, 1011),"2222");
+    
 
 
   </script>

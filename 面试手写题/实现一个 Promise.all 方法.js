@@ -29,7 +29,7 @@ function myPromiseAll(promises) {
 
 // 静态方法：promise.all
 function all(promiseList) {
-  return new MPromise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     // 参数类型判断
     if (!Array.isArray(promiseList)) {
       return reject(new TypeError('arguments must be array'))
@@ -38,8 +38,8 @@ function all(promiseList) {
     const res = []
     let count = 0
     for (let i = 0; i < promiseLength; i++) {
-      // 注意数组元素类型，利用MPromise.resolve无论如何都会返回promise
-      MPromise.resolve(promiseList[i]).then(
+      // 注意数组元素类型，利用Promise.resolve无论如何都会返回promise
+      Promise.resolve(promiseList[i]).then(
         (value) => {
           // 不能用push，会造成返回数据的顺序混乱
           count++
