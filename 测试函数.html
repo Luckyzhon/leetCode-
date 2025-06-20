@@ -60,12 +60,12 @@
           if (digits[i] % 10 === 0) {
             digits = [...Array(n + 1)].map(_ => 0);
             digits[0] = 1;
-            console.log(digits, "----");
+            //console.log(digits, "----");
 
             return digits;
           }
           else {
-            console.log(digits, "--digits");
+            //console.log(digits, "--digits");
             return digits
           }
         }
@@ -204,36 +204,84 @@
         sum += i >= 0 ? parseInt(a[i]) : 0;
         sum += j >= 0 ? parseInt(b[j]) : 0;
         ans += sum % 2;
-        ca = Math.floor(sum / 2);
+        ca = Math.floor(sum / 2); //向下取整
       }
       ans += ca == 1 ? ca : "";
       return ans.split('').reverse().join('');
     };
 
-    //console.log(addBinary(1010, 1011));
+    // console.log(addBinary('1010', '1011'), "---验证");
 
     var addBinary22 = function (a, b) {
       const lena = a.length;
       const lenb = b.length;
       const le = Math.max(lena, lenb)
       let re = [];
-      for (let i = le.length - 1; i >= 0; i--) {
-        re[i] = (lena[i] ?? 0) + lenb[i] ?? 0;
-        console.log(re,"11");
-        
+
+      let result = '';
+
+      for (let i = le - 1; i >= 0; i--) {
+        re[i] = Number(a[i] ?? 0) + Number(b[i] ?? 0);
+
       }
-      for (let j = 0; j <= re.length - 1; j++) {
-        if (re[j] % 2 === 0) {
-          re[j] === 0;
-          re[j + 1]++;
-        }
+      const str = re.reduce((pre, cur) => {
+        pre += cur + '';
+        return pre;
+      })
+      console.log(str, "----str", Number(str).toString(2));
+
+      let temp = str;
+      while (temp > 0) {
+        const remainder = temp % 2;
+        temp = parseInt(temp / 2, 10);
+        result = remainder + result;
       }
-      return re;
+      console.log(result, "----result");
+
     };
 
-    console.log(addBinary22(1010, 1011),"2222");
-    
+    console.log(addBinary22('1010', '1011'), "2222");
 
+    var addBinary33 = function (a, b) {
+      let result = '';
+      let carry = 0;
+      let i = a.length - 1;
+      let j = b.length - 1;
+
+      // 从右到左逐位相加
+      while (i >= 0 || j >= 0 || carry) {
+        let sum = carry;
+        if (i >= 0) {
+          sum += parseInt(a[i--], 10);
+        }
+        if (j >= 0) {
+          sum += parseInt(b[j--], 10);
+        }
+        // 计算当前位的值和进位
+        result = (sum % 2) + result;
+        carry = Math.floor(sum / 2);
+      }
+
+      return result;
+    };
+
+    //console.log(addBinary33('1010', '1011'),'3333');
+    function DecimalToBinary(number) {
+      let temp = number;
+      let result = '';
+      while (temp > 0) {
+        const remainder = temp % 2; // 获取余
+        temp = parseInt(temp / 2, 10); // 获取商
+        result = remainder + result; // 从前拼接字符
+      }
+
+      const nativeResult = number.toString(2);
+      console.log('原生转换结果：', nativeResult);
+      console.log('函数转换结果：', result);
+      console.log('是否一致：', result === nativeResult);
+    }
+
+    DecimalToBinary(123);
 
   </script>
 

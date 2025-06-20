@@ -10,7 +10,7 @@ var addBinary22 = function (a, b) {
   const le = Math.max(lena,lenb)
   let re = 0;
   for(let i=le.length-1; i>=0; i--){
-   re[i] = (lena[i] ?? 0) + lenb[i] ?? 0;
+   re[i] = (lena[i] ?? 0) + (lenb[i] ?? 0);
   }
   for(let j=0;j<=re.length-1;j++){
     if(re[j]%2===0){
