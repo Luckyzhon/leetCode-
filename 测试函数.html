@@ -203,14 +203,18 @@
         let sum = ca;
         sum += i >= 0 ? parseInt(a[i]) : 0;
         sum += j >= 0 ? parseInt(b[j]) : 0;
+        //console.log(sum,"---sum");//1 , 2, 1 ,2
+        
         ans += sum % 2;
-        ca = Math.floor(sum / 2); //向下取整
+        ca = Math.floor(sum / 2); //向下取整0,1,0,1
+        //console.log(ca,"----ca");
+        
       }
       ans += ca == 1 ? ca : "";
       return ans.split('').reverse().join('');
     };
 
-    // console.log(addBinary('1010', '1011'), "---验证");
+     console.log(addBinary('1010', '1011'), "---验证");
 
     var addBinary22 = function (a, b) {
       const lena = a.length;
@@ -240,7 +244,7 @@
 
     };
 
-    console.log(addBinary22('1010', '1011'), "2222");
+    //console.log(addBinary22('1010', '1011'), "2222");
 
     var addBinary33 = function (a, b) {
       let result = '';
@@ -281,7 +285,13 @@
       console.log('是否一致：', result === nativeResult);
     }
 
-    DecimalToBinary(123);
+    //DecimalToBinary(123);
+ 
+
+   
+
+
+
 
   </script>
 
