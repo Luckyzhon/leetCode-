@@ -36,7 +36,7 @@ function throttle2 (func,delay){
     let arge = arguments;
     let that = this;
     if(!timer){
-      timer = setInterval(()=>{
+      timer = setTimeout(()=>{
         func.apply(that,arge);
         timer = null;
       },delay)
@@ -47,5 +47,13 @@ function throttle2 (func,delay){
 
 
 
+//判断数据类型
+function checkType(target){
+  return Object.prototype.toString.call(target).slice(8,-1)
+}
 
-/* 节流*/
+//Promise.all 实现
+
+
+
+
